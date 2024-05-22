@@ -277,7 +277,7 @@ tag to tell browsers to render the gaps.
  to get dummy text <br/>
 <br/>
             Github link
-            <a id="wd-github" href="https://github.com/Amitabh1998/Kansas-react-web-app"> click here </a>
+            <a id="wd-github" href="https://github.com/Amitabh1998/Kansas-react-web-app"> Amitabh Das </a>
              to access github <br/>
         </div>
     </div>
