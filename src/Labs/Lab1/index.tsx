@@ -280,7 +280,6 @@ to get dummy text<br/>
             to access github<br/>
         </div>
     </div>
-      
     );
   }
   
