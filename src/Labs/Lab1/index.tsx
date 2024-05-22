@@ -273,11 +273,12 @@ tag to tell browsers to render the gaps.
         <div id = "Anchor Tag">
             <h4>Anchor Tag</h4>
             Please
-            <a id="wd-lipsum" href="https://www.lipsum.com">click here</a>
-to get dummy text<br/>
+            <a id="wd-lipsum" href="https://www.lipsum.com"> click here </a>
+ to get dummy text <br/>
+<br/>
             Github link
-            <a id="wd-github" href="https://github.com/Amitabh1998/Kansas-react-web-app">click here</a>
-            to access github<br/>
+            <a id="wd-github" href="https://github.com/Amitabh1998/Kansas-react-web-app"> click here </a>
+             to access github <br/>
         </div>
     </div>
     );
