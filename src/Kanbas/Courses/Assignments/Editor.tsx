@@ -1,136 +1,72 @@
-export default function AssignmentEditor() {
-    return (
-      <div id="wd-assignments-editor">
-        <label htmlFor="wd-name">Assignment Name</label>
-        <input id="wd-name" value="A1 - ENV + HTML" /><br /><br />
-        <textarea id="wd-description">
-          The assignment is available online Submit a link to the landing page of
-        </textarea>
-        <br />
-        <table>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-points">Points</label>
-            </td>
-            <td>
-              <input id="wd-points" value={100} />
-            </td>
-          </tr>
+import React from 'react';
+import './EditorPage.css'; // Import CSS file for styling
 
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-group">Assignment Group</label>
-            </td>
-            <td>
-            <select id="wd-group">
-            <option value="ASSIGNMENTS">ASSIGNMENTS</option>
-          
-            </select>
-            </td>
-          </tr>
-
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-display-grade-as">Display Grade as</label>
-            </td>
-            <td>
-            <select id="wd-display-grade-as">
-            <option value="Percentage">Percentage</option>
-          </select>            
-            </td>
-          </tr>
-
-
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-submission-type">Submission Type</label>
-            </td>
-            <td>
-            <select id="wd-submission-type">
-            <option value="Percentage">Online</option>
-          </select>
-
-          <td align="right" valign="top">
-          <label htmlFor="wd-text-entry">Online Entry Options</label>
-          </td>
-          <tr>
-              <input id="wd-text-entry" type='checkbox' />
-              <label htmlFor="wd-text-entry">Text Entry</label>
-          </tr>
-          
-          <tr>
-            <input id="wd-website-url" type='checkbox' />
-            <label htmlFor="wd-website-url">Website URL</label>
-          </tr>
-        
-          <tr>
-            <input id="wd-media-recordings" type='checkbox' />
-            <label htmlFor="wd-media-recordings">Media Recordings</label>
-          </tr>
-
-          <tr>
-            <input id="wd-student-annotation" type='checkbox' />
-            <label htmlFor="wd-student-annotation">Student Annotation</label>
-          </tr>
-
-
-          <tr>
-            <input id="wd-file-upload" type='checkbox' />
-            <label htmlFor="wd-file-upload">File Uploads</label>
-          </tr>
-
-            </td>
-            
-
-          </tr>
-
-          <tr>
-            <td>
-            <label htmlFor="wd-assign-to">Assign</label>&nbsp;
-            <label htmlFor="wd-assign-to">Assign to</label>
-            <tr>
-            <input id="wd-assign-to" value="Everyone"/>
-            </tr>
-
-            </td>
-            
-
-          </tr>
-
-
-          <tr>
-            <td>
-            <label htmlFor="wd-due-date">Due</label>
-            <tr>
-            <input id="wd-due-date" type="date"/>
-            </tr>
-
-            </td>
-            
-
-          </tr>
-
-          <tr>
-            <td>
-            <label htmlFor="wd-available-from">Available from</label>
-            <tr>
-            <input id="wd-available-from" type="date"/>
-            </tr>
-            </td>
-
-            <td>
-            <label htmlFor="wd-available-until">Until</label>
-            <tr>
-            <input id="wd-available-until" type="date"/>
-            </tr>
-            </td>
-          </tr>
-          <tr>
-          <button>cancel</button>&nbsp;
-          <button>save</button>
-          </tr>
-          {/* Complete on your own */}
-        </table>
+const EditorPage = () => {
+  return (
+    <div className="editor-container">
+      <h2>Edit Assignment</h2>
+      <div className="editor-section">
+        <label htmlFor="assignmentName">Assignment Name:</label>
+        <input type="text" id="assignmentName" name="assignmentName" />
       </div>
-  );}
-  
+      <div className="editor-section">
+        <label htmlFor="instructions">Instructions:</label>
+        <textarea id="instructions" name="instructions"></textarea>
+      </div>
+      <div className="editor-section">
+        <label htmlFor="points">Points:</label>
+        <input type="number" id="points" name="points" />
+      </div>
+      <div className="editor-section">
+        <label htmlFor="assignmentType">Assignment Type:</label>
+        <select id="assignmentType" name="assignmentType">
+          <option value="assignment" selected>Assignment</option>
+        </select>
+      </div>
+      <div className="editor-section">
+        <label htmlFor="displayGrade">Display Grade:</label>
+        <select id="displayGrade" name="displayGrade">
+          <option value="percentage">Percentage</option>
+          <option value="numbers">Numbers</option>
+        </select>
+      </div>
+      <div className="editor-section grouped-section">
+        <label htmlFor="submissionType">Submission Type:</label>
+        <select id="submissionType" name="submissionType">
+          <option value="online">Online</option>
+          <option value="offline">Offline</option>
+        </select>
+        <div className="checkboxes">
+          <input type="checkbox" id="textEntry" name="textEntry" />
+          <label htmlFor="textEntry">Text Entry</label>
+          <input type="checkbox" id="mediaRecordings" name="mediaRecordings" />
+          <label htmlFor="mediaRecordings">Media Recordings</label>
+          <input type="checkbox" id="websiteUrl" name="websiteUrl" />
+          <label htmlFor="websiteUrl">Website Url</label>
+          <input type="checkbox" id="fileUpload" name="fileUpload" />
+          <label htmlFor="fileUpload">File Upload</label>
+          <input type="checkbox" id="studentAnnotations" name="studentAnnotations" />
+          <label htmlFor="studentAnnotations">Student Annotations</label>
+        </div>
+      </div>
+      <div className="editor-section">
+        <label htmlFor="dueDate">Due Date:</label>
+        <input type="datetime-local" id="dueDate" name="dueDate" />
+      </div>
+      <div className="editor-section">
+        <label htmlFor="availableFrom">Available From:</label>
+        <input type="datetime-local" id="availableFrom" name="availableFrom" />
+      </div>
+      <div className="editor-section">
+        <label htmlFor="assignedTo">Assigned To:</label>
+        <input type="text" id="assignedTo" name="assignedTo" />
+      </div>
+      <div className="button-section">
+        <button className="btn cancel-btn">Cancel</button>
+        <button className="btn save-btn">Save</button>
+      </div>
+    </div>
+  );
+}
+
+export default EditorPage;
