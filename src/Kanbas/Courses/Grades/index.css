@@ -1,0 +1,13 @@
+.table-responsive {
+    overflow-x: scroll;
+}
+
+.table1 {
+    width: 100%;
+}
+
+.table1 .btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 3%;
+}

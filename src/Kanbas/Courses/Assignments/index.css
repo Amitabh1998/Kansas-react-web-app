@@ -1,0 +1,30 @@
+.wd-flex-row-container-1 {
+    float: right;
+    justify-content: end;
+}
+
+
+.wd-flex-grow-1 {
+    overflow-x: scroll;
+    margin-right: 10px;
+}
+
+.wd-flex-row-container-1 .btn1 {
+    border: 3rem;
+    height: 35px;
+    padding-bottom: 1px;
+    margin-left: 5px;
+}
+
+.wd-flex-row-container-1 .btn1 :hover{
+    background-color: darkgrey;
+}
+
+.wd-flex-row-container-1 .btn-danger {
+    background-color: rgb(208, 21, 21);
+    color: white;
+}
+
+.wd-flex-row-container-1 .btn-danger :hover{
+    background-color: rgb(202, 5, 5);
+}

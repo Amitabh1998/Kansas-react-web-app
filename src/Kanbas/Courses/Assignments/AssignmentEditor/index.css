@@ -1,0 +1,25 @@
+.assignment {
+    margin-right: 10px;
+}
+
+.wd-flex-row-container {
+    display: contents;
+}
+
+.wd-flex {
+    display: flex;
+    justify-content: end;
+    
+}
+
+.wd-flex .btn {
+    border-radius: 5%;
+}
+
+.wd-flex-row-container .btn-clear {
+    margin-right: 10px;
+    font-weight: 600;
+    color: green;
+    border-color: transparent;
+    background-color: transparent;
+}
