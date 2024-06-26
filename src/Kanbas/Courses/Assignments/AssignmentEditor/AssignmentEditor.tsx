@@ -1,50 +1,76 @@
-import React from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
-import db from "../../../Database";
-import "./index2.css";
-import {BiDotsVerticalRounded} from "react-icons/bi";
-import {AiFillCheckCircle} from "react-icons/ai";
+import React from 'react';
+import './EditorPage.css';
 
-export default function AssignmentEditor() {
-  const { assignmentId } = useParams();
-  const assignment = db.assignments.find(
-    (assignment) => assignment._id === assignmentId);
+interface EditorPageProps {
+  onClose: () => void;
+}
 
-
-  const { courseId } = useParams();
-  const navigate = useNavigate();
-  const handleSave = () => {
-    console.log("Actually saving assignment TBD in later assignments");
-    navigate(`/Kanbas/Courses/${courseId}/Assignments`);
-  };
+const EditorPage: React.FC<EditorPageProps> = ({ onClose }) => {
   return (
-
-<div className="wd-flex-row-container">
-  <div className="wd-flex">
-            <button className="btn-clear" disabled>
-              <AiFillCheckCircle/>
-                  Published
-                </button>
-            <button className="btn">
-            <BiDotsVerticalRounded/>
-            </button>
-  </div> 
-        <hr />
-    <div className="assignment">
-      <h5>Assignment Name</h5>
-      <input value={assignment?.title}
-             className="form-control mb-2" />
-        <hr />
-      <div className="wd-flex">   
-      <Link to={`/Kanbas/Courses/${courseId}/Assignments`}
-            className="btn">
-        Cancel
-      </Link>
-      <button onClick={handleSave} className="btn btn-danger">
-        Save
-      </button>
-      </div> 
-    </div>
+    <div className="editor-container">
+      <h2>Edit Assignment</h2>
+      <div className="editor-section">
+        <label htmlFor="assignmentName">Assignment Name:</label>
+        <input type="text" id="assignmentName" name="assignmentName" />
+      </div>
+      <div className="editor-section">
+        <label htmlFor="instructions">Instructions:</label>
+        <textarea id="instructions" name="instructions"></textarea>
+      </div>
+      <div className="editor-section">
+        <label htmlFor="points">Points:</label>
+        <input type="number" id="points" name="points" />
+      </div>
+      <div className="editor-section">
+        <label htmlFor="assignmentType">Assignment Type:</label>
+        <select id="assignmentType" name="assignmentType">
+          <option value="assignment">Assignment</option>
+        </select>
+      </div>
+      <div className="editor-section">
+        <label htmlFor="displayGrade">Display Grade:</label>
+        <select id="displayGrade" name="displayGrade">
+          <option value="percentage">Percentage</option>
+          <option value="numbers">Numbers</option>
+        </select>
+      </div>
+      <div className="editor-section grouped-section">
+        <label htmlFor="submissionType">Submission Type:</label>
+        <select id="submissionType" name="submissionType">
+          <option value="online">Online</option>
+          <option value="offline">Offline</option>
+        </select>
+        <div className="checkboxes">
+          <input type="checkbox" id="textEntry" name="textEntry" />
+          <label htmlFor="textEntry">Text Entry</label>
+          <input type="checkbox" id="mediaRecordings" name="mediaRecordings" />
+          <label htmlFor="mediaRecordings">Media Recordings</label>
+          <input type="checkbox" id="websiteUrl" name="websiteUrl" />
+          <label htmlFor="websiteUrl">Website Url</label>
+          <input type="checkbox" id="fileUpload" name="fileUpload" />
+          <label htmlFor="fileUpload">File Upload</label>
+          <input type="checkbox" id="studentAnnotations" name="studentAnnotations" />
+          <label htmlFor="studentAnnotations">Student Annotations</label>
+        </div>
+      </div>
+      <div className="editor-section">
+        <label htmlFor="dueDate">Due Date:</label>
+        <input type="datetime-local" id="dueDate" name="dueDate" />
+      </div>
+      <div className="editor-section">
+        <label htmlFor="availableFrom">Available From:</label>
+        <input type="datetime-local" id="availableFrom" name="availableFrom" />
+      </div>
+      <div className="editor-section">
+        <label htmlFor="assignedTo">Assigned To:</label>
+        <input type="text" id="assignedTo" name="assignedTo" />
+      </div>
+      <div className="button-section">
+        <button className="btn cancel-btn" onClick={onClose}>Cancel</button>
+        <button className="btn save-btn">Save</button>
+      </div>
     </div>
   );
-}
+};
+
+export default EditorPage;

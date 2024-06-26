@@ -1,26 +1,47 @@
 import React from 'react';
-import { FaFileImport, FaFileExport } from 'react-icons/fa';
+import { useParams } from 'react-router-dom';
+import * as db from '../../Database';
+import { AiOutlinePlus, AiOutlineCheckCircle } from 'react-icons/ai';
+import { BiDotsVerticalRounded } from 'react-icons/bi';
+import { BsFileEarmarkText, BsGripVertical, BsSearch } from 'react-icons/bs';
+import { FaPlus, FaFileImport, FaFileExport } from 'react-icons/fa';
+import './index.css';
 
 export default function Grades() {
+  const { cid } = useParams();
+  const maxPoints = 100;
+
+  // Filtering students who are enrolled in the course
+  const students = db.users.filter(user => user.role === "STUDENT" && db.enrollments.some(enrollment => enrollment.course === cid && enrollment.user === user._id));
+  
+  const courseGrade = db.grades;
+  const courseAssignments = db.assignments.filter(assignment => assignment.course === cid);
 
   return (
-    <div className="container mt-4">
-      <h2>Grades</h2>
-      <div className="row">
-        <div className="col">
-          <div className="input-group mb-3">
-            <input type="text" className="form-control" placeholder="Search for Student Names" />
-            <button className="btn btn-outline-secondary" type="button">Search</button>
+    <div id="wd-grades" className="ms-5">
+      <div className="wd-flex-row-container justify-content-between mb-3">
+        <div className="wd-flex-row-container">
+          <div className="position-relative me-2">
+            <BsSearch className="position-absolute float-start mt-2 ms-2" />
+            <input
+              id="wd-search-students"
+              placeholder="Search Students"
+              className="form-control"
+              style={{ fontSize: '22px', width: '250px', height: '40px', borderRadius: '8px', borderColor: '#ECECEC' }}
+            />
+          </div>
+          <div className="position-relative">
+            <BsSearch className="position-absolute float-start mt-2 ms-2" />
+            <input
+              id="wd-search-assignments"
+              placeholder="Search Assignments"
+              className="form-control"
+              style={{ fontSize: '22px', width: '250px', height: '40px', borderRadius: '8px', borderColor: '#ECECEC' }}
+            />
           </div>
         </div>
-        <div className="col">
-          <div className="input-group mb-3">
-            <input type="text" className="form-control" placeholder="Search for Assignment Names" />
-            <button className="btn btn-outline-secondary" type="button">Search</button>
-          </div>
-        </div>
-        <div className="col-auto">
-          <button className="btn btn-primary me-2">
+        <div className="wd-flex-row-container">
+          <button id="wd-import-grades" className="btn btn-primary me-2">
             <FaFileImport className="me-1" />
             Import
           </button>
@@ -29,11 +50,6 @@ export default function Grades() {
               <FaFileExport className="me-1" />
               Export
             </button>
-            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <li><a className="dropdown-item" href="#">Option 1</a></li>
-              <li><a className="dropdown-item" href="#">Option 2</a></li>
-              <li><a className="dropdown-item" href="#">Option 3</a></li>
-            </ul>
           </div>
         </div>
       </div>
@@ -41,31 +57,26 @@ export default function Grades() {
         <table className="table table-striped">
           <thead>
             <tr>
-              <th scope="col">#</th>
               <th scope="col">Student Name</th>
-              <th scope="col">Assignment Name</th>
-              <th scope="col">Grade</th>
+              {courseAssignments.map((assignment) => (
+                <th key={assignment._id} scope="col">{assignment.title} <br /> Out of {maxPoints}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Student 1</td>
-              <td>Assignment 1</td>
-              <td><input type="text" className="form-control" defaultValue="95" /></td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Student 2</td>
-              <td>Assignment 2</td>
-              <td>90</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Student 3</td>
-              <td>Assignment 3</td>
-              <td>85</td>
-            </tr>
+            {students.map((student) => (
+              <tr key={student._id}>
+                <td>{student.firstName} {student.lastName}</td>
+                {courseAssignments.map((assignment) => {
+                  const grade = courseGrade.find(grade => grade.student === student._id && grade.assignment === assignment._id);
+                  return (
+                    <td key={assignment._id}>
+                      {grade ? `${grade.grade}%` : 'N/A'}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

@@ -1,25 +1,51 @@
-.assignment {
-    margin-right: 10px;
-}
-
-.wd-flex-row-container {
-    display: contents;
-}
-
-.wd-flex {
+.editor-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .editor-section {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  textarea,
+  input[type="text"],
+  input[type="number"],
+  select {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .checkboxes {
+    margin-top: 5px;
+  }
+  
+  .button-section {
     display: flex;
-    justify-content: end;
-    
-}
-
-.wd-flex .btn {
-    border-radius: 5%;
-}
-
-.wd-flex-row-container .btn-clear {
+    justify-content: flex-end;
+  }
+  
+  .cancel-btn {
     margin-right: 10px;
-    font-weight: 600;
-    color: green;
-    border-color: transparent;
-    background-color: transparent;
-}
+  }
+  
+  .save-btn {
+    background-color: #802424;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .save-btn:hover {
+    background-color: #45a049;
+  }
+  

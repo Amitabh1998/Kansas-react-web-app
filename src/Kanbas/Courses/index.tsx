@@ -4,12 +4,13 @@ import { Navigate, Route, Routes, useParams, useLocation } from "react-router";
 import Home from "./Home";
 import { FaAlignJustify } from 'react-icons/fa';
 import Assignments from "./Assignments";
-import AssignmentEditor from "./Assignments/Editor";
+import AssignmentEditor from "./Assignments";
 import Grades from "./Grades";
-import db from "../Database";
+import {courses} from "../Database";
+import Zoom from "./Zoom";
 export default function Courses() {
   const { cid } = useParams();
-  const course = db.courses.find((course) => course._id === cid);
+  const course = courses.find((course) => course._id === cid);
   console.log(course);
   const { pathname } = useLocation();
   return (
@@ -25,8 +26,8 @@ export default function Courses() {
     <div className="flex-fill"><Routes>
         <Route path="Home" element={<Home />} />
         <Route path="Modules" element={<Modules />} />
+        <Route path="Zoom" element={<Zoom />} />
         <Route path="Assignments" element={<Assignments />} />
-        <Route path="Assignments/:aid" element={<AssignmentEditor />} />
         <Route path="Grades" element={<Grades />} />
       </Routes>
       </div>
