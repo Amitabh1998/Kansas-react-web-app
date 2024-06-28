@@ -1,11 +1,12 @@
 import React from 'react';
-import './EditorPage.css';
+import './index.css';
 
 interface EditorPageProps {
   onClose: () => void;
 }
 
 const EditorPage: React.FC<EditorPageProps> = ({ onClose }) => {
+  console.log('DEBUG here')
   return (
     <div className="editor-container">
       <h2>Edit Assignment</h2>
@@ -67,7 +68,7 @@ const EditorPage: React.FC<EditorPageProps> = ({ onClose }) => {
       </div>
       <div className="button-section">
         <button className="btn cancel-btn" onClick={onClose}>Cancel</button>
-        <button className="btn save-btn">Save</button>
+        <button className="btn save-btn" onClick={onClose}>Save</button>
       </div>
     </div>
   );

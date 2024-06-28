@@ -17,8 +17,8 @@ const CourseNavigation: React.FC = () => {
    
    return (
       <div id="wd-courses-navigation" className="list-group fs-5 rounded-0">
-         {links.map((link) => (
-<Link key={link.path} to={link.path} className={`list-group-item p-2 ${pathname.includes(link.label) ? "active" : "text-danger"}`}>
+         {links.map((link, idx) => (
+<Link key={`${link.path}-${idx}`} to={link.path} className={`list-group-item p-2 ${pathname.includes(link.label) ? "active" : "text-danger"}`}>
                {link.label}</Link>
          ))}
       </div>

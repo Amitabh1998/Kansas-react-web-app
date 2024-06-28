@@ -27,7 +27,7 @@ export default function Courses() {
         <Route path="Home" element={<Home />} />
         <Route path="Modules" element={<Modules />} />
         <Route path="Zoom" element={<Zoom />} />
-        <Route path="Assignments" element={<Assignments />} />
+        <Route path="Assignments/*" element={<Assignments />} />
         <Route path="Grades" element={<Grades />} />
       </Routes>
       </div>

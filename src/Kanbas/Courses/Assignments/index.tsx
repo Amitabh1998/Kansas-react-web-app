@@ -1,13 +1,23 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import * as db from '../../Database';
 import { BsFileEarmarkText, BsGripVertical, BsSearch } from 'react-icons/bs';
 import { FaPlus } from 'react-icons/fa';
 import './index.css';
 import LessonControlButtons from '../Modules/LessonControlButtons';
-
+import EditorPage from './EditorPage/EditorPage';
 
 export default function Assignments() {
+const navigate = useNavigate()
+  return (
+    <Routes>
+      <Route index element={<AssignmentsList />} />
+      <Route path='/edit' element={<EditorPage onClose={() => navigate(-1)} />} />
+    </Routes>
+  )
+}
+
+const AssignmentsList = () => { 
   const { cid } = useParams();
   const filteredAssignments = db.assignments.filter(assign => assign.course === cid);
 
@@ -28,7 +38,7 @@ export default function Assignments() {
             <FaPlus className="position-relative me-2 mb-1" style={{ color: 'black' }} />
             Group
           </button>
-          <Link to="EditorPage ">
+          <Link to="edit">
             <button id="wd-add-assignment" className="btn btn-lg btn-danger me-8 float-end">
               <FaPlus className="position-relative me-2 mb-1" style={{ color: '#FAFAFA' }} />
               Assignment
