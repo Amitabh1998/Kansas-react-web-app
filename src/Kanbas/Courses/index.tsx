@@ -36,3 +36,11 @@ export default function Courses() {
 );}
 
   
+
+/* 
+
+onClick={handleClick}
+
+onClick={e => handleClick()}
+
+*/
