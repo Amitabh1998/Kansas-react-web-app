@@ -4,7 +4,7 @@ import * as db from '../../Database';
 import { BsFileEarmarkText, BsGripVertical, BsSearch } from 'react-icons/bs';
 import { FaPlus } from 'react-icons/fa';
 import './index.css';
-import LessonControlButtons from '../Modules/LessonControlButtons';
+import ModuleControlButtons from '../Modules/ModuleControlButtons';
 import EditorPage from './EditorPage/EditorPage';
 
 export default function Assignments() {
@@ -71,7 +71,7 @@ const AssignmentsList = () => {
                     <span style={{ color: 'red' }}>Multiple Modules</span> | <b>Not available until</b> May 6 at 12:00am | <br />
                     <b>Due</b> May 13 at 11:59pm | 100 pts
                   </div>
-                  <LessonControlButtons />
+                  {/* <ModuleControlButtons moduleId={} /> */}
                 </div>
               </li>
             ))}

@@ -6,9 +6,8 @@ import { FaAlignJustify } from 'react-icons/fa';
 import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments";
 import Grades from "./Grades";
-import {courses} from "../Database";
 import Zoom from "./Zoom";
-export default function Courses() {
+export default function Courses({ courses }: { courses: any[]; }) {
   const { cid } = useParams();
   const course = courses.find((course) => course._id === cid);
   console.log(course);
@@ -34,13 +33,3 @@ export default function Courses() {
     </div>
     </div>
 );}
-
-  
-
-/* 
-
-onClick={handleClick}
-
-onClick={e => handleClick()}
-
-*/

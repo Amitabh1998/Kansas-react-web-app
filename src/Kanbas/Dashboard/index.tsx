@@ -1,15 +1,62 @@
 import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import * as db from "../Database";
-export default function Dashboard() {
-  const courses = db.courses;
-    return (
+export default function Dashboard({
+  courses, course, setCourse, 
+  addNewCourse,deleteCourse,
+  updateCourse }: {courses: any[], course:any, setCourse: (course: any) => void,addNewCourse:() => void, deleteCourse:(courseId: any) => void,updateCourse: () => void }) {
+  // const [courses, setCourses] = useState(db.courses);
+  // const [course, setCourse] = useState<any>({
+  //   _id: "0", name: "New Course", number: "New Number",
+  //   startDate: "2023-09-10", endDate: "2023-12-15",
+  //   image: "/images/reactjs.jpg", description: "New Description"
+  // });
+  // const addNewCourse = () => {
+  //   const newCourse = { ...course,
+  //                       _id: new Date().getTime().toString() };
+  //   setCourses([...courses, { ...course, ...newCourse }]);
+  // };
+  // const deleteCourse = (courseId: string) => {
+  //   setCourses(courses.filter((course) => course._id !== courseId));
+  // };
+  // const updateCourse = () => {
+  //   setCourses(
+  //     courses.map((c) => {
+  //       if (c._id === course._id) {
+  //         return course;
+  //       } else {
+  //         return c;
+  //       }
+  //     })
+  //   );
+  // };
+
+
+
+return (
       <div id="wd-dashboard">
         <div className="ms-4">
-  <h1 id="wd-dashboard-title">Dashboard</h1>
+          <h1 id="wd-dashboard-title">Dashboard</h1>
+            <hr />
+          <h5>New Course
+          <button className="btn btn-primary float-end"
+                  id="wd-add-new-course-click"
+                  onClick={addNewCourse} > Add </button>
+          <button className="btn btn-warning float-end me-2"
+                onClick={updateCourse} id="wd-update-course-click">
+          Update
+          </button>
+          </h5>
+
+          <br />
+          <input value={course.name} className="form-control mb-2"
+          onChange={(e) => setCourse({ ...course, name: e.target.value }) } />
+          <textarea value={course.description} className="form-control"
+          onChange={(e) => setCourse({ ...course, description: e.target.value }) } />
+
+      <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2>
   <hr />
-  <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2>
-  <hr />
-</div>
+        </div>
 
   <div id="wd-dashboard-courses" className="row" style={{ paddingLeft: '2rem' }}>
   <div className="row row-cols-1 row-cols-md-5 g-4">
@@ -27,6 +74,22 @@ export default function Dashboard() {
                       {course.description}
                     </p>
                     <Link to={`/Kanbas/Courses/${course._id}/Home`} className="btn btn-primary">Go</Link>
+                    <button onClick={(event) => {
+                      event.preventDefault();
+                      deleteCourse(course._id);
+                    }} className="btn btn-danger float-end"
+                    id="wd-delete-course-click">
+                    Delete
+            </button>
+            <button id="wd-edit-course-click"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        setCourse(course);
+                      }}
+                      className="btn btn-warning me-2 float-end" >
+                      Edit
+                    </button>
+
                   </div>
                 </div>
               </Link>
@@ -37,154 +100,3 @@ export default function Dashboard() {
     </div>
   );
 }
-
-    {/* <div className="row row-cols-1 row-cols-md-5 g-5">
-      <div className="wd-dashboard-course col mb-4" style={{ width: "300px" }}>
-        <div className="card">
-          <img src="/images/reactjs.jpg" width={200}/>
-          <div className="card-body">
-            <a className="wd-dashboard-course-link"
-               href="#/Kanbas/Courses/1234/Home"
-               style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }}>
-                 CS1234 React JS
-            </a>
-            <p className="wd-dashboard-course-title card-text">
-              Full Stack software developer
-            </p>
-            <a href="#/Kanbas/Courses/1234/Home" className="btn btn-primary"> Go </a>
-          </div>
-        </div>
-      </div>
-      <div className="wd-dashboard-course col mb-4" style={{ width: "300px" }}>
-      <div className="card">
-          <img src="/images/reactjs.jpg" width={200}/>
-          <div className="card-body">
-            <a className="wd-dashboard-course-link"
-               href="#/Kanbas/Courses/1234/Home"
-               style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }}>
-                 CS1234 React JS
-            </a>
-            <p className="wd-dashboard-course-title card-text">
-              Machine Learning
-            </p>
-            <a href="#/Kanbas/Courses/1234/Home" className="btn btn-primary"> Go </a>
-          </div>
-        </div>
-
-      </div>
-      <div className="wd-dashboard-course col mb-4" style={{ width: "300px" }}>
-      <div className="card">
-          <img src="/images/reactjs.jpg" width={200}/>
-          <div className="card-body">
-            <a className="wd-dashboard-course-link"
-               href="#/Kanbas/Courses/1234/Home"
-               style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }}>
-                 CS1234 React JS
-            </a>
-            <p className="wd-dashboard-course-title card-text">
-              Deep Learning
-            </p>
-            <a href="#/Kanbas/Courses/1234/Home" className="btn btn-primary"> Go </a>
-          </div>
-        </div>
-
-      </div>
-      <div className="wd-dashboard-course col mb-4" style={{ width: "300px" }}>
-      <div className="card">
-          <img src="/images/reactjs.jpg" width={200}/>
-          <div className="card-body">
-            <a className="wd-dashboard-course-link"
-               href="#/Kanbas/Courses/1234/Home"
-               style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }}>
-                 CS1234 React JS
-            </a>
-            <p className="wd-dashboard-course-title card-text">
-              Deep Learning
-            </p>
-            <a href="#/Kanbas/Courses/1234/Home" className="btn btn-primary"> Go </a>
-          </div>
-        </div>
-      </div>
-      <div className="wd-dashboard-course col mb-4" style={{ width: "300px" }}>
-      <div className="card">
-          <img src="/images/reactjs.jpg" width={200}/>
-          <div className="card-body">
-            <a className="wd-dashboard-course-link"
-               href="#/Kanbas/Courses/1234/Home"
-               style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }}>
-                 CS1234 React JS
-            </a>
-            <p className="wd-dashboard-course-title card-text">
-              Deep Learning
-            </p>
-            <a href="#/Kanbas/Courses/1234/Home" className="btn btn-primary"> Go </a>
-          </div>
-        </div>
-      </div>
-      <div className="wd-dashboard-course col mb-4" style={{ width: "300px" }}>
-      <div className="card">
-          <img src="/images/reactjs.jpg" width={200}/>
-          <div className="card-body">
-            <a className="wd-dashboard-course-link"
-               href="#/Kanbas/Courses/1234/Home"
-               style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }}>
-                 CS1234 React JS
-            </a>
-            <p className="wd-dashboard-course-title card-text">
-              Deep Learning
-            </p>
-            <a href="#/Kanbas/Courses/1234/Home" className="btn btn-primary"> Go </a>
-          </div>
-        </div>
-      </div>
-      <div className="wd-dashboard-course col mb-4" style={{ width: "300px" }}>
-      <div className="card">
-          <img src="/images/reactjs.jpg" width={200}/>
-          <div className="card-body">
-            <a className="wd-dashboard-course-link"
-               href="#/Kanbas/Courses/1234/Home"
-               style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }}>
-                 CS1234 React JS
-            </a>
-            <p className="wd-dashboard-course-title card-text">
-              Deep Learning
-            </p>
-            <a href="#/Kanbas/Courses/1234/Home" className="btn btn-primary"> Go </a>
-          </div>
-        </div>
-      </div>
-      <div className="wd-dashboard-course col mb-4" style={{ width: "300px" }}>
-      <div className="card">
-          <img src="/images/reactjs.jpg" width={200}/>
-          <div className="card-body">
-            <a className="wd-dashboard-course-link"
-               href="#/Kanbas/Courses/1234/Home"
-               style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }}>
-                 CS1234 React JS
-            </a>
-            <p className="wd-dashboard-course-title card-text">
-              Deep Learning
-            </p>
-            <a href="#/Kanbas/Courses/1234/Home" className="btn btn-primary"> Go </a>
-          </div>
-        </div>
-      </div>
-      <div className="wd-dashboard-course col mb-4" style={{ width: "300px" }}>
-      <div className="card">
-          <img src="/images/reactjs.jpg" width={200}/>
-          <div className="card-body">
-            <a className="wd-dashboard-course-link"
-               href="#/Kanbas/Courses/1234/Home"
-               style={{ textDecoration: "none", color: "navy", fontWeight: "bold" }}>
-                 CS1234 React JS
-            </a>
-            <p className="wd-dashboard-course-title card-text">
-              Deep Learning
-            </p>
-            <a href="#/Kanbas/Courses/1234/Home" className="btn btn-primary"> Go </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div></div> */}
-  
