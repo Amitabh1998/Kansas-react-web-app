@@ -14,7 +14,7 @@ interface Assignment {
 }
 
 // Define the shape of the RootState
-interface RootState {
+export interface RootState {
   assignmentsReducer: {
     assignments: Assignment[];
   };

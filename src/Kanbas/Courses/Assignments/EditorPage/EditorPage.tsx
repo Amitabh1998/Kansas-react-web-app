@@ -20,7 +20,7 @@ interface Assignment {
 }
 
 const EditorPage: React.FC<EditorPageProps> = ({ onClose }) => {
-  const { courseId, assignmentId } = useParams<{ courseId: string; assignmentId: string }>();
+  const { cid: courseId, assignmentId } = useParams<{ cid: string; assignmentId: string }>();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const assignments = useSelector((state: any) => state.assignmentsReducer.assignments);

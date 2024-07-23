@@ -2,24 +2,31 @@ import React from 'react';
 import { Link, Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import * as db from '../../Database';
 import { BsFileEarmarkText, BsGripVertical, BsSearch } from 'react-icons/bs';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaTrash } from 'react-icons/fa';
 import './index.css';
 import ModuleControlButtons from '../Modules/ModuleControlButtons';
 import EditorPage from './EditorPage/EditorPage';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from './AssignmentList/AssignmentList';
+import { deleteAssignment } from './reducer';
 
 export default function Assignments() {
 const navigate = useNavigate()
   return (
     <Routes>
       <Route index element={<AssignmentsList />} />
-      <Route path='/edit' element={<EditorPage onClose={() => navigate(-1)} />} />
+      <Route path='/:assignmentId/edit' element={<EditorPage onClose={() => navigate(-1)} />} />
+      <Route path='/:assignmentId' element={<EditorPage onClose={() => navigate(-1)} />} />
     </Routes>
   )
 }
 
 const AssignmentsList = () => { 
   const { cid } = useParams();
-  const filteredAssignments = db.assignments.filter(assign => assign.course === cid);
+  const dispatch = useDispatch();
+  // const filteredAssignments = db.assignments.filter(assign => assign.course === cid);
+  const assignments = useSelector((state: RootState) => state.assignmentsReducer.assignments);
+  const filteredAssignments = assignments.filter(assign => assign.course === cid);
 
   return (
     <div id="wd-assignments" className="ms-5">
@@ -38,7 +45,7 @@ const AssignmentsList = () => {
             <FaPlus className="position-relative me-2 mb-1" style={{ color: 'black' }} />
             Group
           </button>
-          <Link to="edit">
+          <Link to="new">
             <button id="wd-add-assignment" className="btn btn-lg btn-danger me-8 float-end">
               <FaPlus className="position-relative me-2 mb-1" style={{ color: '#FAFAFA' }} />
               Assignment
@@ -58,22 +65,32 @@ const AssignmentsList = () => {
           </div>
           <ul className="wd-assignment-list-items wd-lessons list-group rounded-0">
             {filteredAssignments.map((assignment) => (
-              <li key={assignment._id} className="wd-assignment-list-item wd-lesson list-group-item p-3 ps-1" style={{ borderLeftWidth: '4px', borderLeftColor: 'green' }}>
+              <Link key={assignment._id} to={`${assignment._id}/edit`}>
+              <li className="wd-assignment-list-item wd-lesson list-group-item p-3 ps-1" style={{ borderLeftWidth: '4px', borderLeftColor: 'green' }}>
                 <div className="wd-flex-row-container">
                   <BsGripVertical className="me-2 fs-3 ms-1 mt-4" />
                   <BsFileEarmarkText size={30} className="ms-1 mt-4" style={{ float: 'right', color: 'green' }} />
                   <div className="ms-3 me-5" style={{ fontSize: '18px', marginTop: '-30px' }}>
-                    <Link key={`${assignment.course}/${assignment._id}`} to={`${assignment.course}/${assignment._id}`} className="wd-assignment-link" style={{ color: 'black', textDecoration: 'none' }}>
+                    {/* <Link key={`${assignment.course}/${assignment._id}`} to={`${assignment.course}/${assignment._id}`} className="wd-assignment-link" style={{ color: 'black', textDecoration: 'none' }}> */}
                       <br />
                       <b>{assignment.title}</b>
-                    </Link>
+                    {/* </Link> */}
                     <br />
                     <span style={{ color: 'red' }}>Multiple Modules</span> | <b>Not available until</b> May 6 at 12:00am | <br />
                     <b>Due</b> May 13 at 11:59pm | 100 pts
+                    
                   </div>
+                  <FaTrash className="text-danger" 
+                  onClick={e => {
+                    e.stopPropagation();
+                    e.preventDefault() 
+                    console.log("DEBUG check",assignment._id );
+                    dispatch(deleteAssignment(assignment._id));
+                    }} />
                   {/* <ModuleControlButtons moduleId={} /> */}
                 </div>
               </li>
+              </Link>
             ))}
           </ul>
         </li>

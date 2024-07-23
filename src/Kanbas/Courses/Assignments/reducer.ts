@@ -10,12 +10,16 @@ const assignmentsSlice = createSlice({
   initialState,
   reducers: {
     addAssignment: (state, action) => {
+    console.log("DEBUG new", action.payload)
+
       state.assignments.push({
         ...action.payload,
         _id: new Date().getTime().toString(),
       });
+      // return [...state.assignments]
     },
     deleteAssignment: (state, action) => {
+      console.log("DEBUG action", action);
       state.assignments = state.assignments.filter(
         (assignment) => assignment._id !== action.payload
       );
