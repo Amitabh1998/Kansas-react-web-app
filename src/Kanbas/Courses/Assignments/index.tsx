@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, Route, Routes, useNavigate, useParams } from 'react-router-dom';
-import * as db from '../../Database';
+// import * as db from '../../Database';
+import * as client from "./client";
 import { BsFileEarmarkText, BsGripVertical, BsSearch } from 'react-icons/bs';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import './index.css';
@@ -8,7 +9,7 @@ import ModuleControlButtons from '../Modules/ModuleControlButtons';
 import EditorPage from './EditorPage/EditorPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from './AssignmentList/AssignmentList';
-import { deleteAssignment } from './reducer';
+import { deleteAssignment, setAssignments, addAssignment, updateAssignment  } from './reducer';
 
 export default function Assignments() {
 const navigate = useNavigate()
@@ -27,6 +28,21 @@ const AssignmentsList = () => {
   // const filteredAssignments = db.assignments.filter(assign => assign.course === cid);
   const assignments = useSelector((state: RootState) => state.assignmentsReducer.assignments);
   const filteredAssignments = assignments.filter(assign => assign.course === cid);
+
+  const fetchAssignments = async () => {
+    const assignments = await client.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+ 
+  const removeAssignment = async (assignmentId: string) => {
+    await client.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
+
+
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
 
   return (
     <div id="wd-assignments" className="ms-5">
@@ -85,7 +101,8 @@ const AssignmentsList = () => {
                     e.stopPropagation();
                     e.preventDefault() 
                     console.log("DEBUG check",assignment._id );
-                    dispatch(deleteAssignment(assignment._id));
+                    // dispatch(deleteAssignment(assignment._id));
+                    removeAssignment(assignment._id)
                     }} />
                   {/* <ModuleControlButtons moduleId={} /> */}
                 </div>

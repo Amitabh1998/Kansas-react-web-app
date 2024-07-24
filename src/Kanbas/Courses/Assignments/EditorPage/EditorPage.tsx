@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addAssignment, updateAssignment } from "../reducer";
+import * as client from "../client";
 import './index.css';
 
 interface EditorPageProps {
@@ -43,6 +44,16 @@ const EditorPage: React.FC<EditorPageProps> = ({ onClose }) => {
     }
   }, [assignmentId, assignments]);
 
+  const createAssignment = async (assignment: any) => {
+    const newAssignment = await client.createAssignment(courseId as string, assignment);
+    dispatch(addAssignment({ ...newAssignment, course: courseId }));
+  };
+
+  const saveAssignment = async (assignment: any) => {
+    const status = await client.updateAssignment(assignment);
+    dispatch(updateAssignment(assignment));
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setAssignment({ ...assignment, [name]: value });
@@ -51,9 +62,11 @@ const EditorPage: React.FC<EditorPageProps> = ({ onClose }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (assignmentId === "new") {
-      dispatch(addAssignment({ ...assignment, course: courseId }));
+      // dispatch(addAssignment({ ...assignment, course: courseId }));
+      createAssignment(assignment);
     } else {
-      dispatch(updateAssignment(assignment));
+      // dispatch(updateAssignment(assignment));
+       saveAssignment(assignment);
     }
     navigate(`/Kanbas/Courses/${courseId}/Assignments`);
   };

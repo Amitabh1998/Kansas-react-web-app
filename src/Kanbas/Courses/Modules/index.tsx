@@ -5,6 +5,7 @@ import ModulesControls from "./ModulesControls";
 import ModuleControlButtons from "./ModuleControlButtons";
 import * as client from "./client";
 import { modules as dbModules } from "../../Database";
+import './index.css';
 
 // interface Lesson {
 //   _id: string;
@@ -136,7 +137,9 @@ export default function Modules() {
         {modules
           .filter((module: any) => module.course === cid)
           .map((module: any) => (
-            <>
+            <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
+               <div className="wd-title p-3 ps-2 bg-secondary">
+               <BsGripVertical className="me-2 fs-5" />
                 {!module.editing && module.name}
                 { module.editing && (
                   <input className="form-control w-50 d-inline-block"
@@ -149,16 +152,27 @@ export default function Modules() {
                     value={module.name}
                   />
                 )}
-                 
-                <ModuleControlButtons moduleId={module._id}
+                  <ModuleControlButtons moduleId={module._id}
                   deleteModule={(moduleId) => {
                     removeModule(moduleId);;
                   }}
                   editModule={(moduleId) => dispatch(editModule(moduleId))}
                 />
-                 </>
-                ))}
-                </>
+                </div>
                 
+      {/* <LessonControlButtons /> */}
+                 
+              
+                {module.lessons && (
+      <ul className="wd-lessons list-group rounded-0">
+      {module.lessons.map((lesson: any) => (
+      <li className="wd-lesson list-group-item p-3 ps-1">
+      <BsGripVertical className="me-2 fs-5" />
+      {lesson.name}
+                 </li>
+             
+                ))}</ul>)}
+                    </li>))}
+                </>
                 </ul></div>);
               }
