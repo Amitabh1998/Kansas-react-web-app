@@ -7,10 +7,10 @@ import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments";
 import Grades from "./Grades";
 import Zoom from "./Zoom";
+import PeopleTable from "./People/Table";
 export default function Courses({ courses }: { courses: any[]; }) {
   const { cid } = useParams();
   const course = courses.find((course) => course._id === cid);
-  console.log(course);
   const { pathname } = useLocation();
   return (
     <div id="wd-courses">
@@ -28,6 +28,8 @@ export default function Courses({ courses }: { courses: any[]; }) {
         <Route path="Zoom" element={<Zoom />} />
         <Route path="Assignments/*" element={<Assignments />} />
         <Route path="Grades" element={<Grades />} />
+        <Route path="People" element={<PeopleTable />} />
+        <Route path="People/:uid" element={<PeopleTable />} />
       </Routes>
       </div>
     </div>
