@@ -1,0 +1,22 @@
+.wd-people-table-container {
+    position: relative;
+  }
+  
+  .wd-people-details {
+    width: 300px;
+    z-index: 1000;
+  }
+  
+  .wd-close-details {
+    padding: 5px;
+    margin: 5px;
+  }
+  
+  .wd-user-name {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .wd-user-name:hover {
+    text-decoration: underline;
+  }
