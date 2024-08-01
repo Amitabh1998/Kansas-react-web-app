@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
+
 import * as client from "./client";
+import PeopleDetails from "./Details"; // Import the PeopleDetails component
+import { FaPlus } from "react-icons/fa";
+
 export default function PeopleTable() {
   const [users, setUsers] = useState<any[]>([]);
   const [role, setRole] = useState("");
+  const [name, setName] = useState("");
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null); // State for selected user
+
   const filterUsersByRole = async (role: string) => {
     setRole(role);
     if (role) {
@@ -12,7 +19,18 @@ export default function PeopleTable() {
       fetchUsers();
     }
   };
-  const [name, setName] = useState("");
+  const createUser = async () => {
+    const user = await client.createUser({
+      firstName: "New",
+      lastName: `User${users.length + 1}`,
+      username: `newuser${Date.now()}`,
+      password: "password123",
+      section: "S101",
+      role: "STUDENT",
+    });
+    setUsers([...users, user]);
+  };
+
   const filterUsersByName = async (name: string) => {
     setName(name);
     if (name) {
@@ -23,32 +41,50 @@ export default function PeopleTable() {
     }
   };
 
-
   const fetchUsers = async () => {
     const users = await client.findAllUsers();
     setUsers(users);
   };
+
   useEffect(() => {
     fetchUsers();
   }, []);
+
   return (
     <div id="wd-people-table">
-      <input onChange={(e) => filterUsersByName(e.target.value)} placeholder="Search people"
-             className="form-control float-start w-25 me-2 wd-filter-by-name" />
-      <select value={role} onChange={(e) =>filterUsersByRole(e.target.value)}
-              className="form-select float-start w-25 wd-select-role" >
-        <option value="">All Roles</option>        <option value="STUDENT">Students</option>
-        <option value="TA">Assistants</option>     <option value="FACULTY">Faculty</option>
+      <button onClick={createUser} className="float-end btn btn-danger wd-add-people">
+        <FaPlus className="me-2" />
+        People
+      </button>
+      <input
+        onChange={(e) => filterUsersByName(e.target.value)}
+        placeholder="Search people"
+        className="form-control float-start w-25 me-2 wd-filter-by-name"
+      />
+      <select
+        value={role}
+        onChange={(e) => filterUsersByRole(e.target.value)}
+        className="form-select float-start w-25 wd-select-role"
+      >
+        <option value="">All Roles</option>
+        <option value="STUDENT">Students</option>
+        <option value="TA">Assistants</option>
+        <option value="FACULTY">Faculty</option>
       </select>
       <table className="table table-striped">
         <thead>
           <tr>
-            <th>Name</th><th>Login ID</th><th>Section</th><th>Role</th><th>Last Activity</th><th>Total Activity</th>
+            <th>Name</th>
+            <th>Login ID</th>
+            <th>Section</th>
+            <th>Role</th>
+            <th>Last Activity</th>
+            <th>Total Activity</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user: any) => (
-            <tr key={user._id}>
+            <tr key={user._id} onClick={() => setSelectedUserId(user._id)}> {/* Handle name click */}
               <td className="wd-full-name text-nowrap">
                 <span className="wd-first-name">{user.firstName}</span>
                 <span className="wd-last-name">{user.lastName}</span>
@@ -62,6 +98,9 @@ export default function PeopleTable() {
           ))}
         </tbody>
       </table>
+      {selectedUserId && (
+        <PeopleDetails uid={selectedUserId} onClose={() => setSelectedUserId(null)} fetchUsers={fetchUsers} />
+      )}
     </div>
   );
 }
